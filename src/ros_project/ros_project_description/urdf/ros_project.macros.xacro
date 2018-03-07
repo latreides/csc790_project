@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ros_project">
+   <xacro:macro name="cylinder_inertia" params="mass radius length">
+      <inertial>
+         <mass value="${mass}"/>
+         <inertia 
+         ixx="${(1/12)*mass*(3*radius**2 + length**2)}" 
+         ixy="0.0" 
+         ixz="0.0" 
+         iyy="${(1/12)*mass*(3*radius**2 + length**2)}" 
+         iyz="0.0" 
+         izz="${(1/12)*mass*radius**2}" />
+      </inertial>
+   </xacro:macro>
+   
+      <xacro:macro name="sphere_inertia" params="mass radius">
+      <inertial>
+         <mass value="${mass}"/>
+         <inertia ixx="${(2/5)*mass*radius*radius}" 
+         ixy="0.0" 
+         ixz="0.0" 
+         iyy="${(2/5)*mass*radius*radius}" 
+         iyz="0.0" 
+         izz="${(2/5)*mass*radius*radius}"/>
+      </inertial>
+   </xacro:macro>
+   <xacro:macro name="create_wheel" params="radius parent_name wheel_id xyz">
+      <link name="wheel_${wheel_id}">
+         <visual>
+            <geometry>
+               <cylinder length="0.05" radius="${radius}" />
+            </geometry>
+            <material name="black" />
+         </visual>
+         <collision>
+            <geometry>
+               <cylinder length="0.05" radius="${radius}" />
+            </geometry>
+         </collision>
+      <inertial>
+         <mass value="1" />
+         <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="0.0" />
+      </inertial>
+      </link>
+      <joint name="base_to_wheel_${wheel_id}" type="continuous">
+         <parent link="${parent_name}" />
+         <child link="wheel_${wheel_id}" />
+         <origin rpy="1.57075 0 0" xyz="${xyz}" />
+         <axis xyz="0 0 1" />
+      </joint>
+
+   </xacro:macro>
+   <xacro:macro name="create_nub" params="radius parent_name nub_id xyz">
+      <link name="nub_${nub_id}">
+         <visual>
+            <geometry>
+               <sphere radius="${radius}" />
+            </geometry>
+            <material name="green" />
+         </visual>
+         <collision>
+            <geometry>
+               <sphere radius="${radius}" />
+            </geometry>
+         </collision>
+         <xacro:sphere_inertia mass="1" radius="${radius}"/> 
+      </link>
+      <joint name="base_to_nub_${nub_id}" type="fixed">
+         <parent link="${parent_name}" />
+         <child link="nub_${nub_id}" />
+         <origin xyz="${xyz}" />
+      </joint>
+   </xacro:macro>
+   <xacro:macro name="create_chassis" params="radius parent_name chassis_id xyz">
+      <link name="chassis_${chassis_id}">
+         <visual>
+            <geometry>
+               <cylinder length="0.1" radius="${radius}" />
+            </geometry>
+            <material name="red" />
+         </visual>
+         <collision>
+            <geometry>
+               <cylinder length="0.1" radius="${radius}" />
+            </geometry>
+            <origin rpy="0 0 0"/>
+         </collision>
+         
+         <xacro:cylinder_inertia mass="${chassis_mass}" radius="${radius*3}" length="0.1"/>
+      </link>
+      <joint name="world_to_chassis_${chassis_id}" type="fixed">
+         <parent link="${parent_name}" />
+         <child link="chassis_${chassis_id}" />
+         <origin xyz="${xyz}" />
+      </joint>
+   </xacro:macro>
+</robot>
+
+

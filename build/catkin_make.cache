@@ -1,0 +1,2 @@
+lab01/lab01_listener:lab01/lab01_talker
+-DCATKIN_DEVEL_PREFIX=/home/latreides/ros_workspaces/csc790_labs/devel -DCMAKE_INSTALL_PREFIX=/home/latreides/ros_workspaces/csc790_labs/install -G Unix Makefiles

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot name="ros_project" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find ros_project_description)/urdf/ros_project.materials.xacro"/>
+  <xacro:include filename="$(find ros_project_description)/urdf/ros_project.parameters.xacro"/>
+  <xacro:include filename="$(find ros_project_description)/urdf/ros_project.macros.xacro"/>
+  <xacro:include filename="$(find ros_project_description)/urdf/ros_project.camera.xacro"/>
+  <xacro:include filename="$(find ros_project_description)/urdf/ros_project.control.xacro"/>
+  <link name="the_world"/>
+  
+  <xacro:create_chassis chassis_id = "main" parent_name = "the_world" radius="$(arg chassis_radius)" xyz="0 0.12 1"/>
+
+  <xacro:create_wheel wheel_id = "left" parent_name = "chassis_main" radius="$(arg wheel_radius)" xyz="0 0.12 -0.05"/>
+  <xacro:create_wheel wheel_id = "right" parent_name = "chassis_main" radius="$(arg wheel_radius)" xyz="0 -0.12 -0.05"/>
+
+  <xacro:create_nub nub_id = "back" parent_name = "chassis_main" radius="$(arg nub_radius)" xyz="-0.15 0 -0.04"/>
+  <xacro:create_nub nub_id = "front" parent_name = "chassis_main" radius="$(arg nub_radius)" xyz="0.15 0 -0.04"/>
+
+  <link name="camera_link">
+    <collision>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+  
+   <joint name="camera_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    <parent link="chassis_main"/>
+    <child link="camera_link"/>
+  </joint>
+
+</robot>

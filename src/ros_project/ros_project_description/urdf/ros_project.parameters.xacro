@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot name="ros_project" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="chassis_radius" default="0"/>
+  <xacro:arg name="chassis_height" default="0"/>
+  <xacro:arg name="wheel_radius" default="0"/>
+  <xacro:arg name="nub_radius" default="0"/>
+  <xacro:arg name="world_offset" default="1"/>
+  
+  <xacro:property name="chassis_density" value="500"/>
+  <xacro:property name="chassis_radius" value="$(arg chassis_radius)"/>
+  <xacro:property name="chassis_height" value="$(arg chassis_height)"/>
+  <xacro:property name="wheel_radius" value="$(arg wheel_radius)"/>
+  <xacro:property name="nub_radius" value="$(arg nub_radius)"/>
+  <xacro:property name="chassis_mass" value="${chassis_density * pi * chassis_radius**2 * chassis_height}"/>
+</robot>

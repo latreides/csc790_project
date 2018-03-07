@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<robot
+	xmlns:xacro="http://www.ros.org/wiki/xacro" name="ros_project">
+	<gazebo>
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<robotNamespace>/ros_project</robotNamespace>
+		</plugin>
+
+		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+			<alwaysOn>true</alwaysOn>
+			<updateRate>10</updateRate>
+			<leftJoint>base_to_wheel_left</leftJoint>
+			<rightJoint>base_to_wheel_right</rightJoint>
+			<wheelSeparation>0.5380</wheelSeparation>
+			<wheelDiameter>0.2410</wheelDiameter>
+			<torque>5</torque>
+			<robotNamespace>/ros_project</robotNamespace>
+			<wheelAcceleration>1</wheelAcceleration>
+			<publishWheelTF>true</publishWheelTF>
+			<publishWheelJointState>true</publishWheelJointState>
+			<legacyMode>false</legacyMode>
+			<topicName>cmd_vel</topicName>
+			<robotBaseFrame>chassis_main</robotBaseFrame>
+		</plugin>
+	</gazebo>
+</robot>

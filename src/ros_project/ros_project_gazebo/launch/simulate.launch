@@ -1,0 +1,25 @@
+<launch>
+	<arg name="chassis_radius" default="0.2"/>
+	<arg name="chassis_height" default="0.2"/>
+	<arg name="wheel_radius" default="0.05"/>
+	<arg name="nub_radius" default="0.05"/>
+	<arg name="model" default="$(find ros_project_description)/urdf/ros_project.main.xacro" />
+	<arg name="gui" default="true" />
+	<arg name="rvizconfig" default="$(find ros_project_description)/rviz/urdf.rviz" />
+
+	<param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model) 
+						    chassis_radius:=$(arg chassis_radius)
+						    chassis_height:=$(arg chassis_height) 
+						    wheel_radius:=$(arg wheel_radius)
+						    nub_radius:=$(arg nub_radius)"/>
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="world_name" value="$(find ros_project_gazebo)/worlds/ros_project.world"/>
+	</include>
+
+	<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model ros_project"/>
+
+	<rosparam file="$(find ros_project_gazebo)/config/ros_project_control.yaml" command="load"/>
+
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
+</launch>
+

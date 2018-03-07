@@ -1,0 +1,8 @@
+prefix=/home/latreides/ros_workspaces/csc790_labs/devel
+
+Name: lab01_listener
+Description: Description of lab01_listener
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/latreides/ros_workspaces/csc790_labs/devel/lib 
+Requires: 
