@@ -80,13 +80,13 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
-    <model name='Construction Cone'>
+    <model name='Track'>
       <link name='link'>
         <collision name='collision'>
           <geometry>
             <mesh>
               <scale>10 10 10</scale>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
+              <uri>model://track/meshes/track.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -107,7 +107,7 @@
           <geometry>
             <mesh>
               <scale>10 10 10</scale>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
+              <uri>model://track/meshes/track.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -127,145 +127,9 @@
       </link>
       <pose frame=''>4.24022 -2.31618 0 0 -0 0</pose>
     </model>
-    <model name='Construction Barrel'>
-      <link name='link'>
-        <inertial>
-          <pose frame=''>0 0 0.4 0 -0 0</pose>
-          <mass>500</mass>
-          <inertia>
-            <ixx>51.2096</ixx>
-            <iyy>51.2096</iyy>
-            <izz>25</izz>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyz>0</iyz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_barrel/meshes/construction_barrel.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_barrel/meshes/construction_barrel.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>1.53195 -5.25374 0 0 -0 0</pose>
-    </model>
-    <model name='Construction Barrel_0'>
-      <link name='link'>
-        <inertial>
-          <pose frame=''>0 0 0.4 0 -0 0</pose>
-          <mass>500</mass>
-          <inertia>
-            <ixx>51.2096</ixx>
-            <iyy>51.2096</iyy>
-            <izz>25</izz>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyz>0</iyz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_barrel/meshes/construction_barrel.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://construction_barrel/meshes/construction_barrel.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>-4.48602 0.35415 0 0 -0 0</pose>
-    </model>
-    <model name='Construction Cone_0'>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <scale>10 10 10</scale>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <scale>10 10 10</scale>
-              <uri>model://construction_cone/meshes/construction_cone.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <inertial>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-          <mass>1</mass>
-        </inertial>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>2.44382 0.31626 0 0 -0 0</pose>
-    </model>
+  
+   
+
     <state world_name='default'>
       <sim_time>1184 358000000</sim_time>
       <real_time>116 364765936</real_time>
@@ -321,28 +185,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='ros_project'>
-        <pose frame=''>4.4971 -1.24963 -0.897899 1.1e-05 -0.066527 -1.05659</pose>
-        <scale>1 1 1</scale>
-        <link name='the_world'>
-          <pose frame=''>4.4971 -1.24963 -0.897899 1.1e-05 -0.066527 -1.05659</pose>
-          <velocity>0.068803 -0.157952 0.008019 0.001305 0.004867 -0.230563</velocity>
-          <acceleration>0.5954 -0.41005 16.1795 1.24026 0.984436 2.89052</acceleration>
-          <wrench>8.67284 -5.97295 235.677 0 -0 0</wrench>
-        </link>
-        <link name='wheel_left'>
-          <pose frame=''>4.67499 -1.07661 0.050001 1.57074 0.767986 -1.05663</pose>
-          <velocity>0.113202 -0.199973 0.00673 0.958167 0.820892 2.91087</velocity>
-          <acceleration>0.338927 -0.373571 15.0585 -0.253169 0.595488 -2.25957</acceleration>
-          <wrench>0.338927 -0.373571 15.0585 0 -0 0</wrench>
-        </link>
-        <link name='wheel_right'>
-          <pose frame=''>4.46602 -1.19465 0.050001 -1.57075 0.78569 2.08503</pose>
-          <velocity>0.085746 -0.151394 0.00884 -0.013555 1.37004 2.91089</velocity>
-          <acceleration>0.179101 0.321897 17.4454 -0.253132 0.095821 0.80955</acceleration>
-          <wrench>0.179101 0.321897 17.4454 0 -0 0</wrench>
-        </link>
-      </model>
+   
       <light name='sun'>
         <pose frame=''>0 0 10 0 -0 0</pose>
       </light>
