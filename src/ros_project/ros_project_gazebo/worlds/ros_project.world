@@ -7,7 +7,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>100 100</size>
+              <size>200 200</size>
             </plane>
           </geometry>
           <surface>
@@ -33,7 +33,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>100 100</size>
+              <size>200 200</size>
             </plane>
           </geometry>
           <material>
@@ -85,7 +85,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <scale>10 10 10</scale>
+              <scale>0.1 0.1 0.1</scale>
               <uri>model://track/meshes/track.dae</uri>
             </mesh>
           </geometry>
@@ -106,7 +106,7 @@
         <visual name='visual'>
           <geometry>
             <mesh>
-              <scale>10 10 10</scale>
+              <scale>0.1 0.1 0.1</scale>
               <uri>model://track/meshes/track.dae</uri>
             </mesh>
           </geometry>
@@ -125,7 +125,7 @@
         </inertial>
         <kinematic>0</kinematic>
       </link>
-      <pose frame=''>4.24022 -2.31618 0 0 -0 0</pose>
+      
     </model>
   
    

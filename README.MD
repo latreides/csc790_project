@@ -1,2 +1,2 @@
 # Setup
-Copy the <project>/assets/track folder into the ~/.gazebo/models directory 
+Copy the `<project>/assets/basic track` folder into the `~/.gazebo/models directory`
