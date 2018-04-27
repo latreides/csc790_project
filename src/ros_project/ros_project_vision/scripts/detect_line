@@ -1,0 +1,142 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+from __future__ import division
+
+import rospy
+from sensor_msgs.msg import Image
+from std_msgs.msg import String
+import cv2
+from cv_bridge import CvBridge
+import numpy as np
+
+image_converter = CvBridge()
+
+AVOID_OBJECT_BRG_LOWER= np.array((230, 82, 82), dtype='uint8') #blue cylinder
+AVOID_OBJECT_BRG_UPPER= np.array((255, 123, 123), dtype='uint8')
+
+INTO_OBJECT_BRG_LOWER= np.array((85, 150, 115), dtype='uint8') #lightpole 
+INTO_OBJECT_BRG_UPPER= np.array((106, 172, 136), dtype='uint8')
+
+LINE_BRG_LOWER= np.array((0, 25, 100), dtype='uint8') #orange cone
+LINE_BRG_UPPER= np.array((42, 165, 255), dtype='uint8')
+
+
+g_line_left_frac = 3
+g_line_right_frac = 3
+g_aobj_left_frac = 0
+g_aobj_right_frac = 0
+g_aobj_mleft_frac = 0
+g_aobj_mright_frac = 0
+g_into_left_frac = 0
+g_into_right_frac = 0
+
+def camera_callback(ros_image):
+	#rsopy.log.info('got an image')
+	"""
+	rosmsg show sensor_msgs/Image
+	uint32 seq
+	time stamp
+	string frame_id
+	uint32 height
+	uint32 width
+	string endcoding
+	uint8 is_bigendian
+	uint32 step
+	uint8[] data
+
+	for /lab04/camera1/image_raw
+	height 480
+	width 640
+	endcoding rgb8
+	is_bigendian = false
+	step = 1920
+	data = length is 921600(step *height)
+	"""
+	#rospy.loginfo('Image is {} by {}'.format(ros_image.width, ros_image.height))
+
+	cv_image = image_converter.imgmsg_to_cv2(ros_image, "bgr8")
+	
+	avoid_object_mask = cv2.inRange(cv_image,AVOID_OBJECT_BRG_LOWER, AVOID_OBJECT_BRG_UPPER)
+	into_object_mask = cv2.inRange(cv_image,INTO_OBJECT_BRG_LOWER, INTO_OBJECT_BRG_UPPER)
+	line_mask = cv2.inRange(cv_image,LINE_BRG_LOWER, LINE_BRG_UPPER)
+	#orange_image = cv2.bitwise_and(cv_image, cv_image, mask=line_mask)
+	avoid_image = cv2.bitwise_and(cv_image, cv_image, mask=avoid_object_mask)
+	into_image = cv2.bitwise_and(cv_image, cv_image, mask=into_object_mask)
+
+	global g_into_left_frac 
+	global g_into_mright_frac
+
+	into_left = into_object_mask[:, :int(into_object_mask.shape[1]/2)]
+	into_right = into_object_mask[:, int(into_object_mask.shape[1]/2):]
+	into_left_count = cv2.countNonZero(into_left)
+	into_right_count = cv2.countNonZero(into_right)
+	g_into_left_frac = float(into_left_count) / float(into_left.size)
+	g_into_right_frac = float(into_right_count) / float(into_right.size)
+	
+	global g_aobj_left_frac
+	global g_aobj_right_frac
+	global g_aobj_mleft_frac
+	global g_aobj_mright_frac
+
+	aobj_left = avoid_object_mask[:, :int(avoid_object_mask.shape[1]/4)]
+	aobj_mleft = avoid_object_mask[:, int(avoid_object_mask.shape[1]/4):int(line_mask.shape[1]/2)]
+	aobj_mright = avoid_object_mask[:, int(avoid_object_mask.shape[1]/2):int(line_mask.shape[1]* 3/4)]
+	aobj_right = avoid_object_mask[:, int(avoid_object_mask.shape[1]* 3/4):]
+
+	aobj_left_count = cv2.countNonZero(aobj_left)
+	aobj_mleft_count = cv2.countNonZero(aobj_mleft)
+	aobj_mright_count = cv2.countNonZero(aobj_mright)
+	aobj_right_count = cv2.countNonZero(aobj_right)
+	
+	g_aobj_left_frac = float(aobj_left_count) / float(aobj_left.size)
+	g_aobj_right_frac = float(aobj_mleft_count) / float(aobj_mleft.size)
+	g_aobj_mleft_frac = float(aobj_mright_count) / float(aobj_mright.size)
+	g_aobj_mright_frac = float(aobj_right_count) / float(aobj_right.size)
+
+	global g_line_left_frac
+	line_left = line_mask[:, :int(line_mask.shape[1]/2)]
+	line_left_count = cv2.countNonZero(line_left)
+	g_line_left_frac = float(line_left_count) / float(line_left.size)	
+
+	global g_line_right_frac
+	line_right = line_mask[:, int(line_mask.shape[1]/2):]
+	line_right_count = cv2.countNonZero(line_right)
+	g_line_right_frac = float(line_right_count) / float(line_right.size)
+
+	print (g_line_left_frac, g_line_right_frac, g_aobj_left_frac, g_aobj_right_frac, g_aobj_mleft_frac, g_aobj_mright_frac, g_into_left_frac, g_into_right_frac)
+	cv2.imshow('camera', np.hstack([cv_image, into_image]))
+	cv2.waitKey(1)
+	#prnt size of left screen
+	#rospy.loginfo('Full image {} by {}, left half is'.format(cv_image.shape, line_left.shape)) 
+
+def init_line_detector():
+	rospy.init_node('line_detector', anonymous=True)# anonymous cuz dont want 2 nodes with same name
+	rospy.Subscriber('/ros_project/camera1/image_raw', Image, camera_callback)
+
+def run_line_publisher():
+	global g_line_left_frac
+	global g_line_right_frac
+	line_publisher = rospy.Publisher('/ros_project/line_frac', String, queue_size=1)
+	rate = rospy.Rate(1)
+	while not rospy.is_shutdown():
+		line_fracs = '{} {} {} {} {} {} {} {}'.format(g_line_left_frac, g_line_right_frac, g_aobj_left_frac, g_aobj_right_frac, g_aobj_mleft_frac, g_aobj_mright_frac, g_into_left_frac, g_into_right_frac)
+		line_publisher.publish(line_fracs)
+		rate.sleep()
+
+if __name__ == '__main__':
+	init_line_detector()
+	try :
+		run_line_publisher()
+	except rospy.ROSInterruptException:
+		pass
+
+#rosrun lab04_vision detect_orange
+#rosrun lab04_control command_robot.sh 0.05 1
+#rqt_image_view
+#rostopic info /lab04/camera1/image_raw
+#rostopic hz /lab04/camera1/image_raw
+#rostopic pub /lab04/camera1/image_raw
+#rostopic bw /lab04/camera1/image_raw #give the bandwidth
+#use gpick 
+
