@@ -86,7 +86,7 @@
           <geometry>
             <mesh>
               <scale>0.1 0.1 0.1</scale>
-              <uri>model://track/meshes/track.dae</uri>
+              <uri>model://track.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -107,7 +107,7 @@
           <geometry>
             <mesh>
               <scale>0.1 0.1 0.1</scale>
-              <uri>model://track/meshes/track.dae</uri>
+              <uri>model://track.dae</uri>
             </mesh>
           </geometry>
         </visual>
@@ -125,10 +125,7 @@
         </inertial>
         <kinematic>0</kinematic>
       </link>
-      
     </model>
-  
-   
 
     <state world_name='default'>
       <sim_time>1184 358000000</sim_time>
