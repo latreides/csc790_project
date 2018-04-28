@@ -3,10 +3,10 @@
   <asset>
     <contributor>
       <author>Blender User</author>
-      <authoring_tool>Blender 2.79.0 commit date:2018-02-21, commit time:10:41, hash:8928d99270f</authoring_tool>
+      <authoring_tool>Blender 2.79.0 commit date:2018-03-22, commit time:14:10, hash:f4dc9f9</authoring_tool>
     </contributor>
-    <created>2018-04-11T22:30:22</created>
-    <modified>2018-04-11T22:30:22</modified>
+    <created>2018-04-28T00:40:01</created>
+    <modified>2018-04-28T00:40:01</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -192,7 +192,7 @@
         <instance_light url="#Lamp-light"/>
       </node>
       <node id="track" name="track" type="NODE">
-        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <matrix sid="transform">0.1004143 0 0 0 0 0.1004143 0 0 0 0 0.1004143 0 0 0 0 1</matrix>
         <instance_geometry url="#Cube-mesh" name="track">
           <bind_material>
             <technique_common>

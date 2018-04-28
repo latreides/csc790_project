@@ -7,7 +7,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>200 200</size>
+              <size>75 75</size>
             </plane>
           </geometry>
           <surface>
@@ -33,7 +33,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>200 200</size>
+              <size>75 75</size>
             </plane>
           </geometry>
           <material>
@@ -45,6 +45,7 @@
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
     </model>
     <light name='sun' type='directional'>
@@ -85,28 +86,15 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <scale>0.1 0.1 0.1</scale>
-              <uri>model://track.dae</uri>
+              <scale>1 1 1</scale>
+              <uri>model://collision.dae</uri>
             </mesh>
           </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
         </collision>
         <visual name='visual'>
           <geometry>
             <mesh>
-              <scale>0.1 0.1 0.1</scale>
+              <scale>1 1 1</scale>
               <uri>model://track.dae</uri>
             </mesh>
           </geometry>
@@ -124,52 +112,22 @@
           <mass>1</mass>
         </inertial>
         <kinematic>0</kinematic>
+        <gravity>1</gravity>
       </link>
     </model>
-
     <state world_name='default'>
-      <sim_time>1184 358000000</sim_time>
-      <real_time>116 364765936</real_time>
-      <wall_time>1520007311 56179405</wall_time>
-      <iterations>114197</iterations>
-      <model name='Construction Barrel'>
-        <pose frame=''>1.53194 -5.25374 0 0 0 -3e-06</pose>
+      <sim_time>1250 298000000</sim_time>
+      <real_time>67 183113384</real_time>
+      <wall_time>1524895496 633822277</wall_time>
+      <iterations>65940</iterations>
+      <model name='Track'>
+        <pose frame=''>0.021954 50.091489 0.243564 0.040247 -0 -0.03224</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>1.53194 -5.25374 0 0 0 -3e-06</pose>
+          <pose frame=''>0.021954 0.091489 0.243564 0.040247 -0 -0.03224</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>3.45854 5.74438 4.40609 1.34623 0.77903 3.14097</acceleration>
-          <wrench>1729.27 2872.19 2203.04 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='Construction Barrel_0'>
-        <pose frame=''>-4.48603 0.354146 0 0 0 -3e-06</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>-4.48603 0.354146 0 0 0 -3e-06</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>3.45854 5.74438 4.40609 1.34623 0.77903 3.14097</acceleration>
-          <wrench>1729.27 2872.19 2203.04 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='Construction Cone'>
-        <pose frame=''>4.24022 -2.31618 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>4.24022 -2.31618 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 -0.008512 -2.58585 1.13682 3.14159</acceleration>
-          <wrench>0 0 -0.008512 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='Construction Cone_0'>
-        <pose frame=''>3.21962 4.61803 0 0 0 -0.0001</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>3.21962 4.61803 0 0 0 -0.0001</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 -0.008512 -2.58565 1.13687 3.14159</acceleration>
-          <wrench>0 0 -0.008512 0 -0 0</wrench>
+          <acceleration>0.79618 -0.049566 0.204678 0.365729 -0.18631 -0.002522</acceleration>
+          <wrench>0.79618 -0.049566 0.204678 0 -0 0</wrench>
         </link>
       </model>
       <model name='ground_plane'>
@@ -182,14 +140,13 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-   
       <light name='sun'>
         <pose frame=''>0 0 10 0 -0 0</pose>
       </light>
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>8.45329 -10.0811 4.89033 0 0.275643 2.35619</pose>
+        <pose frame=''>16.3379 -16.1619 5.52465 0 0.327643 2.04019</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
