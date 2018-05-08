@@ -1,0 +1,4 @@
+ros_project/ros_project_vision
+/home/rjb102/csc790_project/devel_debug/.private/ros_project_vision/lib/pkgconfig/ros_project_vision.pc /home/rjb102/csc790_project/devel_debug/lib/pkgconfig/ros_project_vision.pc
+/home/rjb102/csc790_project/devel_debug/.private/ros_project_vision/share/ros_project_vision/cmake/ros_project_visionConfig.cmake /home/rjb102/csc790_project/devel_debug/share/ros_project_vision/cmake/ros_project_visionConfig.cmake
+/home/rjb102/csc790_project/devel_debug/.private/ros_project_vision/share/ros_project_vision/cmake/ros_project_visionConfig-version.cmake /home/rjb102/csc790_project/devel_debug/share/ros_project_vision/cmake/ros_project_visionConfig-version.cmake

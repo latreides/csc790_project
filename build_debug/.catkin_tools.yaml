@@ -1,0 +1,6 @@
+devel_space: /home/rjb102/csc790_project/devel_debug
+install: false
+install_space: /home/rjb102/csc790_project/install_debug
+profile: debug
+source_space: /home/rjb102/csc790_project/src
+workspace: /home/rjb102/csc790_project

@@ -1,0 +1,8 @@
+prefix=/home/rjb102/csc790_project/devel_debug/.private/ros_project_vision
+
+Name: ros_project_vision
+Description: Description of ros_project_vision
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/rjb102/csc790_project/devel_debug/.private/ros_project_vision/lib 
+Requires: 
