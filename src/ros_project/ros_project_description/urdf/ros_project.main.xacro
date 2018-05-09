@@ -7,10 +7,10 @@
   <xacro:include filename="$(find ros_project_description)/urdf/ros_project.control.xacro"/>
   <link name="the_world"/>
   
-  <xacro:create_chassis chassis_id = "main" parent_name = "the_world" radius="$(arg chassis_radius)" xyz="0 0.12 1"/>
+  <xacro:create_chassis chassis_id = "main" parent_name = "the_world" radius="$(arg chassis_radius)" xyz="0.5 3.2 0.5"/>
 
-  <xacro:create_wheel wheel_id = "left" parent_name = "chassis_main" radius="$(arg wheel_radius)" xyz="0 0.12 -0.05"/>
-  <xacro:create_wheel wheel_id = "right" parent_name = "chassis_main" radius="$(arg wheel_radius)" xyz="0 -0.12 -0.05"/>
+  <xacro:create_wheel wheel_id = "left" parent_name = "chassis_main" radius="$(arg wheel_radius)" xyz="0 0.15 -0.041"/>
+  <xacro:create_wheel wheel_id = "right" parent_name = "chassis_main" radius="$(arg wheel_radius)" xyz="0 -0.15 -0.041"/>
 
   <xacro:create_nub nub_id = "back" parent_name = "chassis_main" radius="$(arg nub_radius)" xyz="-0.15 0 -0.04"/>
   <xacro:create_nub nub_id = "front" parent_name = "chassis_main" radius="$(arg nub_radius)" xyz="0.15 0 -0.04"/>
@@ -18,13 +18,13 @@
   <link name="camera_link">
     <collision>
       <geometry>
-        <box size="0.1 0.1 0.1"/>
+        <box size="0.05 0.05 0.05"/>
       </geometry>
     </collision>
 
     <visual>
       <geometry>
-        <box size="0.1 0.1 0.1"/>
+        <box size="0.05 0.05 0.05"/>
       </geometry>
       <material name="red"/>
     </visual>
@@ -37,7 +37,7 @@
   
    <joint name="camera_joint" type="fixed">
     <axis xyz="0 0 0" />
-    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
     <parent link="chassis_main"/>
     <child link="camera_link"/>
   </joint>
