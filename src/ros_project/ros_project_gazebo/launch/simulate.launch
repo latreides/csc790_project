@@ -7,6 +7,7 @@
 	<arg name="gui" default="true" />
 	<arg name="rvizconfig" default="$(find ros_project_description)/rviz/urdf.rviz" />
 
+
 	<param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model) 
 						    chassis_radius:=$(arg chassis_radius)
 						    chassis_height:=$(arg chassis_height) 
