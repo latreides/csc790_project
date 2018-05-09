@@ -1,107 +1,74 @@
 #!/usr/bin/env python
-
-from __future__ import print_function
 from __future__ import division
 
-import rospy
+import rospy 
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
-
+from time import sleep
 import numpy as np
 
-g_line_left_frac = 0.0
-g_line_right_frac = 0.0
-g_aobj_left_frac = 0.0
-g_aobj_right_frac = 0.0
-g_aobj_mleft_frac = 0.0
-g_aobj_mright_frac = 0.0
-g_into_left_frac = 0.1
-g_into_right_frac = 0.1
+g_orange_left_frac = 0
+g_orange_right_frac = 0
+g_blue_left_frac = 0
+g_blue_right_frac = 0
 
-def frac_callback(line_frac):
-	global g_aobj_left_frac
-	global g_aobj_right_frac
-	global g_aobj_mleft_frac
-	global g_aobj_mright_frac
-	global g_line_left_frac, g_line_right_frac 
-	global g_into_left_frac, g_into_right_frac
-	g_line_left_frac = float(line_frac.data.split(' ')[0])
-	g_line_right_frac = float(line_frac.data.split(' ')[1])
-	g_aobj_left_frac = float(line_frac.data.split(' ')[2])
-	g_aobj_right_frac = float(line_frac.data.split(' ')[3])
-	g_aobj_mleft_frac = float(line_frac.data.split(' ')[4])
-	g_aobj_mright_frac = float(line_frac.data.split(' ')[5])
-	g_into_left_frac = float(line_frac.data.split(' ')[6])
-	g_into_right_frac = float(line_frac.data.split(' ')[7])
-	print (g_into_left_frac, g_into_right_frac)
-	
 
+def frac_callback(orange_frac):
+  global g_orange_left_frac
+  global g_orange_right_frac
+  global g_blue_left_frac
+  global g_blue_right_frac
+
+  g_orange_left_frac = float(orange_frac.data.split(' ')[0])
+  g_orange_right_frac = float(orange_frac.data.split(' ')[1])
+  g_blue_left_frac = float(orange_frac.data.split(' ')[2])
+  g_blue_right_frac = float(orange_frac.data.split(' ')[3])
+  #sleep(0.1)
+  
+  
 def run_control_publisher():
-	control_publisher = rospy.Publisher('/ros_project/cmd_vel', Twist, queue_size=1)
-	rate = rospy.Rate(1)
-	
-	#init twist
-	vel_msg= Twist()
-	vel_msg.linear.x = 0
-	vel_msg.linear.y =  0
-	vel_msg.linear.z = 0
-	vel_msg.angular.x = 0
-	vel_msg.angular.y =  0
-	vel_msg.angular.z = 0
-	MAX_ANGULAR_RATE = 0.5
-	MAX_LINEAR_RATE = -0.3
-
-	while not rospy.is_shutdown():
-
-		if g_into_right_frac > 0.0 or g_into_left_frac > 0.0:
-			if g_into_left_frac > g_into_right_frac:
+  control_publisher = rospy.Publisher('/ros_project/cmd_vel', Twist, queue_size=1)
+  rate = rospy.Rate(1)
+  
+  vel_msg = Twist()
+  vel_msg.linear.x = 0
+  vel_msg.linear.y = 0
+  vel_msg.linear.z = 0
+  vel_msg.angular.x = 0
+  vel_msg.angular.y = 0
+  vel_msg.angular.z = 0
+    
+  while not rospy.is_shutdown():
+  	print (g_orange_left_frac, g_orange_right_frac, g_blue_left_frac, g_blue_right_frac)
+  	if np.isclose(g_orange_right_frac, g_blue_left_frac):
+  		vel_msg.angular.z = 0.0
+  		vel_msg.linear.x = -0.7
+  		print('go foward')
+  	elif g_orange_right_frac > 0.0 or g_blue_left_frac > 0.0:
+  		if g_orange_right_frac > 0.0:
+  			vel_msg.angular.z = 0.2
+  			vel_msg.linear.x = -0.45
+  			print('Veer right')
+  		else:
 				vel_msg.angular.z = -0.2
-				vel_msg.linear.x = MAX_LINEAR_RATE
-				print('into-Veer left')
-			elif g_into_right_frac > g_into_left_frac:
-				vel_msg.angular.z = 0.2
-				vel_msg.linear.x = MAX_LINEAR_RATE
-				print('into-Veer right')
-			else:
-				vel_msg.angular.z = 0.0
-				vel_msg.linear.x = -0.2
-				print('turn foward')
-		elif g_aobj_mleft_frac > 0.0 or g_aobj_mright_frac > 0.0:
-			if g_aobj_mleft_frac > 0.0:
-				vel_msg.angular.z = -0.3
-				vel_msg.linear.x = MAX_LINEAR_RATE
-				print('avoid-Veer left')
-			elif g_aobj_mright_frac > 0.0:
-				vel_msg.angular.z = 0.3
-				vel_msg.linear.x = MAX_LINEAR_RATE
-				print('avoid-Veer right')
-			else:
-				vel_msg.angular.z = 0.0
-				vel_msg.linear.x = -0.2
-				print('avoid foward')
-		else:
-			if g_line_left_frac > g_line_right_frac:
-				vel_msg.angular.z = 0.2
-				vel_msg.linear.x = MAX_LINEAR_RATE
-				print('Veer right')
-			elif g_line_right_frac > g_line_left_frac:
-				vel_msg.angular.z = -0.2
-				vel_msg.linear.x = MAX_LINEAR_RATE
+				vel_msg.linear.x = -0.5
 				print('Veer left')
-			else:
-				vel_msg.angular.z = 0.0
-				vel_msg.linear.x = -0.2
-				print('go foward')
+  	else:
+  		vel_msg.angular.z = 0.0
+  		vel_msg.linear.x = -0.7
+  		print('go foward')
+  	
+  	control_publisher.publish(vel_msg)
+  	rate.sleep()
 
-		control_publisher.publish(vel_msg)	
-		rate.sleep()
 
+    
 if __name__ == '__main__':
-	rospy.init_node('line_frac_controler', anonymous=True)
-	rospy.Subscriber('/ros_project/line_frac', String, frac_callback)
-	try :
-		run_control_publisher()
-	except rospy.ROSInterruptException:
-		pass
+  rospy.init_node('orange_frac_controller', anonymous=True)
+  rospy.Subscriber('/ros_project/orange_frac', String, frac_callback)
 
-#rqt_graph show how node connected
+  try:
+    run_control_publisher()
+  except rospy.ROSInterruptException:
+    pass
+    
