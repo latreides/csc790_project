@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ros_project">
  <gazebo reference="camera_link">
     <sensor type="camera" name="camera1">
-      <update_rate>30.0</update_rate>
+      <update_rate>10</update_rate>
       <camera name="head">
         <horizontal_fov>1.3962634</horizontal_fov>
         <image>
