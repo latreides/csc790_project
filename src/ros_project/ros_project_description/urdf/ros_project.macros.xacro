@@ -75,13 +75,13 @@
       <link name="chassis_${chassis_id}">
          <visual>
             <geometry>
-               <cylinder length="0.1" radius="${radius}" />
+               <box size="0.4 0.3 0.1"/>
             </geometry>
             <material name="red" />
          </visual>
          <collision>
             <geometry>
-               <cylinder length="0.1" radius="${radius}" />
+               <box size="0.4 0.3 0.1"/>
             </geometry>
             <origin rpy="0 0 0"/>
          </collision>
