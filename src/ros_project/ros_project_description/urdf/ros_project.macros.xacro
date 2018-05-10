@@ -75,13 +75,13 @@
       <link name="chassis_${chassis_id}">
          <visual>
             <geometry>
-               <box size="0.4 0.3 0.1"/>
+               <box size="0.3 0.3 0.1"/>
             </geometry>
             <material name="red" />
          </visual>
          <collision>
             <geometry>
-               <box size="0.4 0.3 0.1"/>
+               <box size="0.3 0.3 0.1"/>
             </geometry>
             <origin rpy="0 0 0"/>
          </collision>
@@ -91,6 +91,30 @@
       <joint name="world_to_chassis_${chassis_id}" type="fixed">
          <parent link="${parent_name}" />
          <child link="chassis_${chassis_id}" />
+         <origin xyz="${xyz}" />
+      </joint>
+   </xacro:macro>
+
+   <xacro:macro name="create_chassis_head" params="radius parent_name xyz">
+      <link name="chassis_head">
+         <visual>
+            <geometry>
+               <box size="0.2 0.2 0.05"/>
+            </geometry>
+            <material name="red" />
+         </visual>
+         <collision>
+            <geometry>
+               <box size="0.2 0.2 0.05"/>
+            </geometry>
+            <origin rpy="0 0 0"/>
+         </collision>
+         
+         <xacro:cylinder_inertia mass="${chassis_mass}" radius="${radius*3}" length="0.1"/>
+      </link>
+      <joint name="chassis_to_chassis_head" type="fixed">
+         <parent link="${parent_name}" />
+         <child link="chassis_head" />
          <origin xyz="${xyz}" />
       </joint>
    </xacro:macro>
