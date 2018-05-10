@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC -g  -shared -Wl,-soname,libgtest.so -o libgtest.so CMakeFiles/gtest.dir/src/gtest-all.cc.o  -L/home/rjb102/csc790_project/build_debug/ros_project_gazebo/gtest/gtest/src -lpthread -Wl,-rpath,/home/rjb102/csc790_project/build_debug/ros_project_gazebo/gtest/gtest/src 

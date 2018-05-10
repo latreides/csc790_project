@@ -1,8 +1,0 @@
-prefix=/home/rjb102/csc790_project/devel_debug/.private/ros_project_gazebo
-
-Name: ros_project_gazebo
-Description: Description of ros_project_gazebo
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/rjb102/csc790_project/devel_debug/.private/ros_project_gazebo/lib 
-Requires: 

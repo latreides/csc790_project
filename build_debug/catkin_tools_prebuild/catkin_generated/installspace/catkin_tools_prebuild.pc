@@ -1,8 +1,0 @@
-prefix=/home/rjb102/csc790_project/install_debug
-
-Name: catkin_tools_prebuild
-Description: Description of catkin_tools_prebuild
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/rjb102/csc790_project/install_debug/lib 
-Requires: 

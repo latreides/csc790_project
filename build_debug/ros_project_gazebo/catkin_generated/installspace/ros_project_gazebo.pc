@@ -1,8 +1,0 @@
-prefix=/home/rjb102/csc790_project/install_debug
-
-Name: ros_project_gazebo
-Description: Description of ros_project_gazebo
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/rjb102/csc790_project/install_debug/lib 
-Requires: 

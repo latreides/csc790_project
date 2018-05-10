@@ -1,1 +1,0 @@
-/home/rjb102/csc790_project/devel_debug/.private/ros_project_vision/lib/pkgconfig/ros_project_vision.pc
