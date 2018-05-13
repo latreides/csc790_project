@@ -11,6 +11,8 @@ g_orange_left_frac = 0
 g_orange_right_frac = 0
 g_blue_left_frac = 0
 g_blue_right_frac = 0
+g_box_left_frac = 0
+g_box_right_frac = 0
 
 
 def frac_callback(orange_frac):
@@ -18,11 +20,15 @@ def frac_callback(orange_frac):
   global g_orange_right_frac
   global g_blue_left_frac
   global g_blue_right_frac
+  global g_box_left_frac
+  global g_box_right_frac
 
   g_orange_left_frac = float(orange_frac.data.split(' ')[0])
   g_orange_right_frac = float(orange_frac.data.split(' ')[1])
   g_blue_left_frac = float(orange_frac.data.split(' ')[2])
   g_blue_right_frac = float(orange_frac.data.split(' ')[3])
+  g_box_left_frac = float(orange_frac.data.split(' ')[4])
+  g_box_right_frac = float(orange_frac.data.split(' ')[5])
   #sleep(0.1)
   
   
@@ -39,20 +45,32 @@ def run_control_publisher():
   vel_msg.angular.z = 0
     
   while not rospy.is_shutdown():
-  	print (g_orange_left_frac, g_orange_right_frac, g_blue_left_frac, g_blue_right_frac)
-  	if np.isclose(g_orange_right_frac, g_blue_left_frac):
-  		vel_msg.angular.z = 0.0
-  		vel_msg.linear.x = -0.7
-  		print('go foward')
+  	if (g_box_left_frac > 0.0 or g_box_right_frac > 0.0):
+  		if g_box_left_frac > g_box_right_frac:
+  			vel_msg.angular.z = 0.1
+  			vel_msg.linear.x = -0.45
+  			print('advoid -Veer right')
+  		elif g_box_right_frac > g_box_left_frac:
+  			vel_msg.angular.z = -0.1
+  			vel_msg.linear.x = -0.5
+  			print('advoid -Veer left')
+		else:
+			vel_msg.angular.z = 0.0
+			vel_msg.linear.x = 0.0
+			print('advoid -Stop')
+	elif np.isclose(g_orange_right_frac, g_blue_left_frac):
+		vel_msg.angular.z = 0.0
+		vel_msg.linear.x = -0.7
+		print('go foward')
   	elif g_orange_right_frac > 0.0 or g_blue_left_frac > 0.0:
   		if g_orange_right_frac > 0.0:
   			vel_msg.angular.z = 0.2
   			vel_msg.linear.x = -0.45
   			print('Veer right')
   		else:
-				vel_msg.angular.z = -0.2
-				vel_msg.linear.x = -0.5
-				print('Veer left')
+			vel_msg.angular.z = -0.2
+			vel_msg.linear.x = -0.5
+			print('Veer left')
   	else:
   		vel_msg.angular.z = 0.0
   		vel_msg.linear.x = -0.7
