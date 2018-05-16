@@ -8,17 +8,24 @@ import cv2
 import numpy as np
 image_converter = CvBridge()
 
-ORANGE_BGR_UPPER = np.array((10, 255, 255), dtype='uint8')
-ORANGE_BGR_LOWER = np.array((0, 25, 100), dtype='uint8')
+ORANGE_BGR_UPPER = np.array((68, 160, 230), dtype='uint8')
+ORANGE_BGR_LOWER = np.array((60, 135, 186), dtype='uint8')
 
-BLUE_BGR_UPPER = np.array((245, 3, 16), dtype='uint8')
-BLUE_BGR_LOWER = np.array((44, 0, 5), dtype='uint8')
+BLUE_BGR_UPPER = np.array((226, 66, 75), dtype='uint8')
+BLUE_BGR_LOWER = np.array((185, 61, 65), dtype='uint8')
 
+BOX_BGR_UPPER = np.array((59, 103, 125), dtype='uint8')
+BOX_BGR_LOWER = np.array((40, 72, 91), dtype='uint8')
+#42, 165, 255
+#0, 25, 100
 g_orange_left_frac = 0
 g_orange_right_frac = 0
 
 g_blue_left_frac = 0
 g_blue_right_frac = 0
+
+g_box_left_frac = 0
+g_box_right_frac = 0
 
 def camera_callback(gz_image):
 
@@ -60,8 +67,25 @@ def camera_callback(gz_image):
   g_blue_left_frac = float(blue_count_left) /  float(blue_left.size)
   g_blue_right_frac = float(blue_count_right) /  float(blue_right.size)
   
-  print (g_orange_left_frac, g_orange_right_frac, g_blue_left_frac, g_blue_right_frac)
-  cv2.imshow('camera', np.hstack([cv_image, orange_image, blue_image]))
+  
+  global g_box_left_frac
+  global g_box_right_frac
+  
+  box_mask = cv2.inRange(cv_image, BOX_BGR_LOWER, BOX_BGR_UPPER)
+  box_image = cv2.bitwise_and(cv_image, cv_image, mask=box_mask)
+  
+  box_left = box_mask[int(box_mask.shape[0] * 0.55):, :int(box_mask.shape[1]/2)]
+  box_right = box_mask[int(box_mask.shape[0] * 0.55):, int(box_mask.shape[1]/2):]
+  
+  box_count_left = cv2.countNonZero(box_left)
+  box_count_right = cv2.countNonZero(box_right)
+  
+  g_box_left_frac = float(box_count_left) /  float(box_left.size)
+  g_box_right_frac = float(box_count_right) /  float(box_right.size)
+  
+  print(g_box_left_frac, g_box_right_frac)
+  #print (g_orange_left_frac, g_orange_right_frac, g_blue_left_frac, g_blue_right_frac)
+  cv2.imshow('camera', np.hstack([cv_image, box_image]))
   cv2.waitKey(1)
 
 def orange_detector():
@@ -74,7 +98,7 @@ def run_orange_publisher():
   orange_publisher = rospy.Publisher('/ros_project/orange_frac', String, queue_size=1)
   rate = rospy.Rate(1)
   while not rospy.is_shutdown():
-    orange_fracs = '{} {} {} {}'.format(g_orange_left_frac, g_orange_right_frac, g_blue_left_frac, g_blue_right_frac)
+    orange_fracs = '{} {} {} {} {} {}'.format(g_orange_left_frac, g_orange_right_frac, g_blue_left_frac, g_blue_right_frac, g_box_left_frac, g_box_right_frac)
     orange_publisher.publish(orange_fracs)
     rate.sleep()
 
